@@ -3,6 +3,6 @@ services:
     image: mcr.microsoft.com/playwright:v1.59.1-jammy
     working_dir: /app
     volumes:
-      - ./:/app
-    user: "${UID}:${GID}"
+      - ./:/app:Z
+    user: "${UID:-1000}:${GID:-1000}"
     command: sh -c "npm install && npx playwright install && npx playwright test"

@@ -1,10 +1,12 @@
 import { test, expect } from '@playwright/test';
+
 /**
  * Estos tests fueron generados con el comando: npx playwright codegen https://opensource-demo.orangehrmlive.com
  * esto abre una "grabadora de tc"
  * dentro de la grabadora podremos replicar los pasos requeridos.
  * Luego ese código puede limpiarse y mejorarse manualmente.
  */
+
 test('test grabado con codegen', async ({ page }) => {
   await page.goto('https://opensource-demo.orangehrmlive.com/web/index.php/auth/login');
   await page.getByRole('textbox', { name: 'Username' }).fill('Admin');

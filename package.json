@@ -3,13 +3,25 @@
   "version": "1.0.0",
   "description": "",
   "main": "index.js",
-  "scripts": {},
+  "scripts": {
+    "test": "npx playwright test",
+    "ui": "npx playwright test --ui",
+    "report": "npx playwright show-report",
+    "trace": "npx playwright show-trace test-results/**/trace.zip",
+    "docker:up": "docker-compose up --remove-orphans",
+    "docker:down": "docker-compose down",
+    "docker:reset": "docker-compose down && docker-compose pull && docker-compose up --remove-orphans",
+    "docker:test": "docker-compose up --remove-orphans",
+    "docker:install": "docker-compose run playwright npm install",
+    "docker:setup": "docker-compose run playwright sh -c \"npm install && npx playwright install\"",
+    "clean": "rm -rf test-results playwright-report"
+  },
   "keywords": [],
   "author": "",
   "license": "ISC",
   "type": "commonjs",
   "devDependencies": {
-    "@playwright/test": "^1.58.2",
+    "@playwright/test": "^1.59.1",
     "@types/node": "^25.5.0"
   }
 }

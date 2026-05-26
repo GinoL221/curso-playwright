@@ -2,31 +2,24 @@
   "name": "playwright-curso-branch3",
   "version": "1.0.0",
   "description": "Framework base POM con Playwright y Allure para el trabajo final",
-  "main": "index.js",
   "type": "commonjs",
   "scripts": {
     "test": "playwright test",
     "test:headed": "playwright test --headed",
     "test:ui": "playwright test --ui",
-
     "test:chrome": "playwright test --project=chromium",
     "test:firefox": "playwright test --project=firefox",
     "test:webkit": "playwright test --project=webkit",
-
     "report": "playwright show-report",
     "trace": "playwright show-trace test-results/**/trace.zip",
-
     "allure:generate": "allure generate ./allure-results --clean -o ./allure-report",
     "allure:open": "allure open ./allure-report",
-
     "docker:up": "docker-compose up --remove-orphans",
     "docker:down": "docker-compose down",
     "docker:reset": "docker-compose down && docker-compose pull && docker-compose up --remove-orphans",
-
     "docker:test": "docker-compose run playwright npx playwright test",
     "docker:install": "docker-compose run playwright npm install",
     "docker:setup": "docker-compose run playwright sh -c \"npm install && npx playwright install\"",
-
     "clean": "rm -rf test-results playwright-report allure-results allure-report"
   },
   "keywords": [],
@@ -34,8 +27,9 @@
   "license": "ISC",
   "devDependencies": {
     "@playwright/test": "1.60.0",
-    "@types/node": "^25.5.0",
+    "@types/node": "^22.0.0",
     "allure-playwright": "^3.4.1",
-    "dotenv": "^16.4.7"
+    "dotenv": "^16.4.7",
+    "typescript": "^5.7.0"
   }
 }

@@ -1,7 +1,11 @@
-import { expect } from '@playwright/test';
+// @ts-check
+
+const { expect } = require('@playwright/test');
+
 /**
- * Recorre una lista de elementos, captura los textos
- * y los guarda en un array
+ * Recorre una lista de elementos, captura sus textos y los devuelve normalizados
+ * @param {import('@playwright/test').Locator} locator - Locator que representa la colección de elementos
+ * @returns {Promise<string[]>} Lista de textos limpios en el orden en que aparecen
  */
 async function captureTextsFromList(locator) {
   const texts = [];
@@ -17,18 +21,16 @@ async function captureTextsFromList(locator) {
     texts.push(cleanText);
   }
 
-  console.log('Textos capturados:', texts);
-
   return texts;
 }
 
 /**
- * Valida que los textos capturados coincidan con los esperados
+ * Valida que la lista de textos capturados coincida exactamente con la esperada
+ * @param {string[]} actualTexts - Textos obtenidos en la UI
+ * @param {string[]} expectedTexts - Textos esperados para la validación
+ * @returns {Promise<void>} Promesa resuelta cuando la comparación finaliza
  */
-function validateTextsList(actualTexts, expectedTexts) {
-  console.log('Esperados:', expectedTexts);
-  console.log('Actuales:', actualTexts);
-
+async function validateTextsList(actualTexts, expectedTexts) {
   expect(actualTexts).toEqual(expectedTexts);
 }
 

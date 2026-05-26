@@ -1,6 +1,7 @@
 services:
   playwright:
     image: mcr.microsoft.com/playwright:v1.60.0-jammy
+    user: "${UID:-1000}:${GID:-1000}"
     working_dir: /app
     volumes:
       - ./:/app:Z

@@ -13,6 +13,9 @@ node_modules/
 logs 
 *.log
 
+# SDD artifacts
+/openspec/
+
 # Env
 .env
 .env.local

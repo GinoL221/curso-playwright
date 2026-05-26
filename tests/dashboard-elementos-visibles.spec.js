@@ -1,4 +1,6 @@
-const { test } = require('../fixtures/fixtures');
+// @ts-check
+
+const { test, expect } = require('../fixtures/fixtures');
 const users = require('../data/users.json');
 
 test('Validar elementos visibles del menu lateral', async ({ loginPage, dashboardPage }) => {
@@ -7,6 +9,9 @@ test('Validar elementos visibles del menu lateral', async ({ loginPage, dashboar
   await loginPage.login(users.validUser.username, users.validUser.password);
 
   // Act y Assert
-  await dashboardPage.validateDashboardLoaded();
-  await dashboardPage.validateMultipleMenuOptions(['Admin', 'PIM', 'Leave', 'Time']);
+  const isDashboardVisible = await dashboardPage.isDashboardVisible();
+  expect(isDashboardVisible).toBe(true);
+
+  const visibleOptions = await dashboardPage.areMultipleMenuOptionsVisible(['Admin', 'PIM', 'Leave', 'Time']);
+  expect(visibleOptions.every(Boolean)).toBe(true);
 });

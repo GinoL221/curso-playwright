@@ -1,4 +1,6 @@
-const { test } = require('../fixtures/fixtures');
+// @ts-check
+
+const { test, expect } = require('../fixtures/fixtures');
 const users = require('../data/users.json');
 
 test.describe('Dashboard - OrangeHRM', () => {
@@ -8,18 +10,28 @@ test.describe('Dashboard - OrangeHRM', () => {
   });
 
   test('Validar dashboard y usuario logueado', async ({ dashboardPage }) => {
-    await dashboardPage.validateDashboardLoaded();
-    await dashboardPage.validateLoggedUserVisible();
+    const isDashboardVisible = await dashboardPage.isDashboardVisible();
+    expect(isDashboardVisible).toBe(true);
+
+    const isLoggedUserVisible = await dashboardPage.isLoggedUserVisible();
+    expect(isLoggedUserVisible).toBe(true);
   });
 
   test('Validar multiples opciones del menu lateral', async ({ dashboardPage }) => {
-    await dashboardPage.validateDashboardLoaded();
-    await dashboardPage.validateMultipleMenuOptions(users.menuOptions);
+    const isDashboardVisible = await dashboardPage.isDashboardVisible();
+    expect(isDashboardVisible).toBe(true);
+
+    const visibleOptions = await dashboardPage.areMultipleMenuOptionsVisible(users.menuOptions);
+    expect(visibleOptions.every(Boolean)).toBe(true);
   });
 
   test('Buscar opcion del menu lateral', async ({ dashboardPage }) => {
-    await dashboardPage.validateDashboardLoaded();
+    const isDashboardVisible = await dashboardPage.isDashboardVisible();
+    expect(isDashboardVisible).toBe(true);
+
     await dashboardPage.searchMenuOption('PIM');
-    await dashboardPage.validateMenuOptionVisible('PIM');
+
+    const isPimOptionVisible = await dashboardPage.isMenuOptionVisible('PIM');
+    expect(isPimOptionVisible).toBe(true);
   });
 });

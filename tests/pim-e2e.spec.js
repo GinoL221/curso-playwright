@@ -1,4 +1,6 @@
-const { test } = require('../fixtures/fixtures');
+// @ts-check
+
+const { test, expect } = require('../fixtures/fixtures');
 const users = require('../data/users.json');
 
 test.describe('PIM - End to End', () => {
@@ -14,7 +16,8 @@ test.describe('PIM - End to End', () => {
 
     // Navegar a PIM
     await dashboardPage.openMenuOption('PIM');
-    await pimPage.validatePimPageLoaded();
+    const isPimPageVisible = await pimPage.isPimPageVisible();
+    expect(isPimPageVisible).toBe(true);
 
     // Act: Agregar empleado
     await pimPage.addEmployee(firstName, lastName);

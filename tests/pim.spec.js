@@ -1,4 +1,6 @@
-const { test } = require('../fixtures/fixtures');
+// @ts-check
+
+const { test, expect } = require('../fixtures/fixtures');
 const users = require('../data/users.json');
 
 test.describe('PIM - OrangeHRM', () => {
@@ -8,15 +10,25 @@ test.describe('PIM - OrangeHRM', () => {
   });
 
   test('Acceder a la seccion PIM', async ({ dashboardPage, pimPage }) => {
-    await dashboardPage.validateDashboardLoaded();
+    const isDashboardVisible = await dashboardPage.isDashboardVisible();
+    expect(isDashboardVisible).toBe(true);
+
     await dashboardPage.openMenuOption('PIM');
-    await pimPage.validatePimPageLoaded();
+
+    const isPimPageVisible = await pimPage.isPimPageVisible();
+    expect(isPimPageVisible).toBe(true);
   });
 
   test('Validar elementos principales de la seccion PIM', async ({ dashboardPage, pimPage }) => {
-    await dashboardPage.validateDashboardLoaded();
+    const isDashboardVisible = await dashboardPage.isDashboardVisible();
+    expect(isDashboardVisible).toBe(true);
+
     await dashboardPage.openMenuOption('PIM');
-    await pimPage.validatePimPageLoaded();
-    await pimPage.validatePimMainElements();
+
+    const isPimPageVisible = await pimPage.isPimPageVisible();
+    expect(isPimPageVisible).toBe(true);
+
+    const arePimMainElementsVisible = await pimPage.arePimMainElementsVisible();
+    expect(arePimMainElementsVisible.every(Boolean)).toBe(true);
   });
 });

@@ -15,6 +15,7 @@ logs
 
 # SDD artifacts
 /openspec/
+/.atl/
 
 # Env
 .env

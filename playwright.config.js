@@ -1,5 +1,10 @@
 // @ts-check
 import { defineConfig, devices } from "@playwright/test";
+import dotenv from "dotenv";
+import path from "path";
+
+// Leer el archivo .env
+dotenv.config({ path: path.resolve(__dirname, ".env") });
 
 export default defineConfig({
   testDir: "./tests",
@@ -15,7 +20,7 @@ export default defineConfig({
   reporter: [["list"], ["html"], ["allure-playwright"]],
 
   use: {
-    baseURL: "https://opensource-demo.orangehrmlive.com",
+    baseURL: process.env.BASE_URL || "https://opensource-demo.orangehrmlive.com",
 
     headless: true,
 

@@ -1,8 +1,8 @@
 services:
   playwright:
-    image: mcr.microsoft.com/playwright:v1.59.1-jammy
+    image: mcr.microsoft.com/playwright:v1.60.0-jammy
     working_dir: /app
     volumes:
       - ./:/app:Z
-    user: "${UID:-1000}:${GID:-1000}"
-    command: sh -c "npm install && npx playwright install && npx playwright test"
+      - /app/node_modules
+    command: sh -c "npm install && npx playwright test"

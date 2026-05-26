@@ -17,6 +17,10 @@ class DashboardPage extends BasePage {
     await expect(this.userDropdownName).toBeVisible();
   }
 
+  async validarDashboard() {
+    await this.validateDashboardLoaded();
+  }
+
   async validateMenuOptionVisible(optionName) {
     await expect(this.page.getByRole('link', { name: optionName })).toBeVisible();
   }

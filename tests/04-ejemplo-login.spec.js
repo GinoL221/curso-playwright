@@ -1,31 +1,18 @@
-import { test, expect } from '@playwright/test';
+const { test, expect } = require('../fixtures/fixtures');
+const users = require('../data/users.json');
 
-test('test', async ({ page }) => {
-  await page.goto('https://opensource-demo.orangehrmlive.com/web/index.php/auth/login');
-  await expect(page.getByRole('img', { name: 'company-branding' })).toBeVisible();
-  await expect(page.locator('form')).toContainText('Forgot your password?');
-  await page.getByRole('textbox', { name: 'Username' }).click();
-  await page.getByRole('textbox', { name: 'Username' }).press('CapsLock');
-  await page.getByRole('textbox', { name: 'Username' }).fill('');
-  await page.getByRole('textbox', { name: 'Username' }).click();
-  await expect(page.getByText('Required')).toBeVisible();
-  await expect(page.locator('form')).toContainText('Username');
-  await page.getByRole('textbox', { name: 'Username' }).click();
-  await page.getByRole('textbox', { name: 'Username' }).press('CapsLock');
-  await page.getByRole('textbox', { name: 'Username' }).press('CapsLock');
-  await page.getByRole('textbox', { name: 'Username' }).fill('');
-  await page.getByRole('textbox', { name: 'Username' }).press('CapsLock');
-  await page.getByRole('textbox', { name: 'Username' }).fill('Admin');
-  await page.getByRole('textbox', { name: 'Username' }).press('Tab');
-  await page.getByRole('textbox', { name: 'Password' }).fill('admin1');
-  await page.getByRole('button', { name: 'Login' }).click();
-  await expect(page.getByRole('alert')).toBeVisible();
-  await expect(page.getByRole('alert')).toContainText('Invalid credentials');
-  await page.getByRole('textbox', { name: 'Username' }).click();
-  await page.getByRole('textbox', { name: 'Username' }).fill('Admin');
-  await page.getByRole('textbox', { name: 'Username' }).press('Tab');
-  await page.getByRole('textbox', { name: 'Password' }).fill('admin123');
-  await page.getByRole('textbox', { name: 'Password' }).press('Enter');
-  await page.getByRole('button', { name: 'Login' }).click();
-  await expect(page.getByRole('link', { name: 'Admin' })).toBeVisible();
+test('Ejemplo de flujos de login (refactorizado)', async ({ loginPage, dashboardPage }) => {
+  await loginPage.goToLogin();
+  
+  // Validar elementos iniciales
+  await loginPage.validateLoginPageLoaded();
+  
+  // Intento fallido
+  await loginPage.login('Admin', 'admin1');
+  await loginPage.validateErrorMessage('Invalid credentials');
+  
+  // Intento exitoso
+  await loginPage.login(users.validUser.username, users.validUser.password);
+  await dashboardPage.validateDashboardLoaded();
+  await dashboardPage.validateMenuOptionVisible('Admin');
 });

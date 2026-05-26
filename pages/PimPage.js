@@ -10,6 +10,15 @@ class PimPage extends BasePage {
     this.employeeIdLabel = page.getByText('Employee Id', { exact: true });
     this.searchButton = page.getByRole('button', { name: 'Search' });
     this.resetButton = page.getByRole('button', { name: 'Reset' });
+    this.addButton = page.getByRole('button', { name: 'Add' });
+    
+    // Locators para agregar empleado
+    this.firstNameInput = page.locator('input[name="firstName"]');
+    this.lastNameInput = page.locator('input[name="lastName"]');
+    this.saveButton = page.getByRole('button', { name: 'Save' });
+    
+    // Locators para búsqueda
+    this.idSearchInput = page.locator('div.oxd-input-group:has-text("Employee Id") input');
   }
 
   async validatePimPageLoaded() {
@@ -22,6 +31,19 @@ class PimPage extends BasePage {
     await expect(this.employeeIdLabel).toBeVisible();
     await expect(this.searchButton).toBeVisible();
     await expect(this.resetButton).toBeVisible();
+    await expect(this.addButton).toBeVisible();
+  }
+
+  async addEmployee(firstName, lastName) {
+    await this.click(this.addButton);
+    await this.fill(this.firstNameInput, firstName);
+    await this.fill(this.lastNameInput, lastName);
+    await this.click(this.saveButton);
+  }
+
+  async searchEmployeeById(id) {
+    await this.fill(this.idSearchInput, id);
+    await this.click(this.searchButton);
   }
 }
 

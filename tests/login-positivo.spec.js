@@ -1,20 +1,13 @@
-const { test } = require('@playwright/test');
-
-const { goToLogin } = require('../helpers/navigationHelper');
-const { login } = require('../helpers/loginHelper');
-const { validarDashboard } = require('../helpers/dashboardHelper');
-
+const { test } = require('../fixtures/fixtures');
 const users = require('../data/users.json');
 
-test('Login exitoso', async ({ page }) => {
-
+test('Login exitoso', async ({ loginPage, dashboardPage }) => {
   // Arrange
-  await goToLogin(page);
+  await loginPage.goToLogin();
 
   // Act
-  await login(page, users.validUser.username, users.validUser.password);
+  await loginPage.login(users.validUser.username, users.validUser.password);
 
   // Assert
-  await validarDashboard(page);
-
+  await dashboardPage.validarDashboard();
 });

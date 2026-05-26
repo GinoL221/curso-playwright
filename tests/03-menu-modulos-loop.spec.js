@@ -1,15 +1,13 @@
-import { test, expect } from '@playwright/test';
+const { test, expect } = require('../fixtures/fixtures');
+const users = require('../data/users.json');
 
-test('Validar que el modulo PIM existe en el menu', async ({ page }) => {
-  await page.goto('https://opensource-demo.orangehrmlive.com/web/index.php/auth/login');
+test('Validar que el modulo PIM existe en el menu', async ({ loginPage, dashboardPage }) => {
+  await loginPage.goToLogin();
+  await loginPage.login(users.validUser.username, users.validUser.password);
 
-  await page.fill('input[name="username"]', 'Admin');
-  await page.fill('input[name="password"]', 'admin123');
-  await page.click('button[type="submit"]');
+  await dashboardPage.validateDashboardLoaded();
 
-  await expect(page).toHaveURL(/dashboard/);
-
-  const modulos = page.locator('.oxd-main-menu-item');
+  const modulos = dashboardPage.menuItems;
   const cantidad = await modulos.count();
   let moduloEncontrado = false;
 

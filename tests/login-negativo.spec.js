@@ -1,21 +1,13 @@
-const { test, expect } = require('@playwright/test');
-
-const { goToLogin } = require('../helpers/navigationHelper');
-const { login } = require('../helpers/loginHelper');
-
+const { test } = require('../fixtures/fixtures');
 const users = require('../data/users.json');
 
-test('Login con credenciales incorrectas', async ({ page }) => {
-
+test('Login con credenciales incorrectas', async ({ loginPage }) => {
   // Arrange
-  await goToLogin(page);
+  await loginPage.goToLogin();
 
   // Act
-  await login(page, users.invalidUser.username, users.invalidUser.password);
-
-  await page().pause();
+  await loginPage.login(users.invalidUsers[0].username, users.invalidUsers[0].password);
 
   // Assert
-  await expect(page.getByRole('alert')).toBeVisible();
-
+  await loginPage.validateErrorMessage('Invalid credentials');
 });

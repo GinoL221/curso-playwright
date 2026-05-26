@@ -1,33 +1,23 @@
-const { test } = require('@playwright/test');
-const LoginPage = require('../pages/LoginPage');
-const DashboardPage = require('../pages/DashboardPage');
+const { test } = require('../fixtures/fixtures');
 const users = require('../data/users.json');
 
 test.describe('Dashboard - OrangeHRM', () => {
-  test.beforeEach(async ({ page }) => {
-    const loginPage = new LoginPage(page);
-
+  test.beforeEach(async ({ loginPage }) => {
     await loginPage.goToLogin();
     await loginPage.login(users.validUser.username, users.validUser.password);
   });
 
-  test('Validar dashboard y usuario logueado', async ({ page }) => {
-    const dashboardPage = new DashboardPage(page);
-
+  test('Validar dashboard y usuario logueado', async ({ dashboardPage }) => {
     await dashboardPage.validateDashboardLoaded();
     await dashboardPage.validateLoggedUserVisible();
   });
 
-  test('Validar multiples opciones del menu lateral', async ({ page }) => {
-    const dashboardPage = new DashboardPage(page);
-
+  test('Validar multiples opciones del menu lateral', async ({ dashboardPage }) => {
     await dashboardPage.validateDashboardLoaded();
     await dashboardPage.validateMultipleMenuOptions(users.menuOptions);
   });
 
-  test('Buscar opcion del menu lateral', async ({ page }) => {
-    const dashboardPage = new DashboardPage(page);
-
+  test('Buscar opcion del menu lateral', async ({ dashboardPage }) => {
     await dashboardPage.validateDashboardLoaded();
     await dashboardPage.searchMenuOption('PIM');
     await dashboardPage.validateMenuOptionVisible('PIM');

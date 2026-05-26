@@ -33,8 +33,9 @@
   "author": "",
   "license": "ISC",
   "devDependencies": {
-    "@playwright/test": "^1.55.0",
+    "@playwright/test": "1.60.0",
     "@types/node": "^25.5.0",
-    "allure-playwright": "^3.4.1"
+    "allure-playwright": "^3.4.1",
+    "dotenv": "^16.4.7"
   }
 }

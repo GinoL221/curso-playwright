@@ -1,98 +1,75 @@
-# Verificar e instalar node y npm
+# Playwright Professional Framework - OrangeHRM
 
-Descargar e instalar Visual Studio Code:
+Este repositorio contiene un framework de automatización profesional basado en Playwright para la aplicación OrangeHRM.
 
-https://code.visualstudio.com/
+## Características Principales
 
-Una vez instalado vs code.
+- **Page Object Model (POM):** Estructura modular y mantenible.
+- **Fixtures Personalizadas:** Inyección de dependencias para tests más limpios.
+- **Data-Driven Testing:** Datos de prueba centralizados en archivos JSON.
+- **Manejo de Ambientes:** Soporte para variables de entorno mediante `.env`.
+- **Dockerizado:** Ejecución consistente y rápida mediante Docker y Docker Compose.
+- **Reportes Avanzados:** Integración con Allure Playwright.
 
-* Abrir una terminal y ejecutar los siguientes comandos:
+## Requisitos Previos
 
-```node -v ``` - ENTORNO DE DESARROLLO
+- [Docker](https://docs.docker.com/get-docker/) y [Docker Compose](https://docs.docker.com/compose/install/).
+- [Node.js](https://nodejs.org/) (opcional, para desarrollo local fuera de Docker).
 
-```npm -v ``` - PACKAGE MANAGER (MANEJADOR DE PAQUETES) - los paquetes contienen soluciones que se pueden reutilizar. https://www.npmjs.com/ 
+## Instalación y Configuración
 
-* El comando -v nos ayuda a comprobar si la aplicacion, dependecia o paquete que precisamos esta instalado en nuestro entorno de trabajo.
-___
+1.  Clonar el repositorio.
+2.  Crear el archivo de ambiente:
+    ```bash
+    cp .env.example .env
+    ```
+3.  Instalar dependencias locales (opcional):
+    ```bash
+    npm install
+    ```
 
-* Si la consulta ES SATISFACTORIA deberiamos ver la version instalada, algo similar a esto:
+## Ejecución de Pruebas
 
-``` 
-v20.10.0
+### Usando Docker (Recomendado)
 
-9.8.1
-``` 
-> [!NOTE]
-> (estas versiones pueden variar ya que se actualizan constantemente, lo importante es ver el numero de version)
-
-- Una vez instalado node y npm desde la terminal vamos a ejecutar:
-
-```npm init playwright@latest ```
-___
-
-* Si la respuesta NO ES SATISFACTORIA debes instalar node y npm:
-
-https://nodejs.org/
-
-Se recomienda instalar la versión LTS (Long Term Support).
-
-Una vez instalado repetir los pasos de verificación.
-___
-> [!IMPORTANT]
-> Si ninguno los comandos anteriores tuvo exito y vemos un mensaje con la leyenda:
-
+Para ejecutar toda la suite de pruebas:
+```bash
+docker-compose up --abort-on-container-exit
 ```
- 'C:\Program Files (x86)\XXXXX\XXXX\playwright.ps1' install --with-deps chromium
-& : File C:\Program Files (x86)\XXXXX\XXXX\playwright.ps1 cannot be loaded because running scripts is disabled on
-this system. For more information, see about_Execution_Policies at https:/go.microsoft.com/fwlink/?LinkID=135170.
-At line:1 char:3
 
-& 'C:\Program Files (x86)\XXXXX\XXXX\playwright.ps1' install --with- ...
+### Usando NPM local
 
-CategoryInfo : SecurityError: (:) [], PSSecurityException
-FullyQualifiedErrorId : UnauthorizedAccess
+```bash
+# Todos los tests
+npm test
+
+# Modo UI
+npm run test:ui
+
+# Proyectos específicos
+npm run test:chrome
+npm run test:firefox
 ```
-Tendremos que ejecutar:
-``` Set-ExecutionPolicy -ExecutionPolicy Unrestricted -Scope LocalMachine ``` 
-ó
 
-``` Set-ExecutionPolicy Unrestricted ```
+## Reportes
 
-y a continuación contesta con un "S" o "Y", para indicar que quieres modificarla. 
+### Playwright Report
+```bash
+npm run report
+```
 
-``` Get-ExecutionPolicy -List ``` - Si fuera necesario verificar cuales son las "policy execution" podran verlas listadas.
+### Allure Report
+```bash
+# Generar
+npm run allure:generate
+# Abrir
+npm run allure:open
+```
 
-___
+## Estructura del Proyecto
 
-### PACKAGE.JSON
-
-package.json es el archivo principal de un proyecto Node.
-
-Contiene información como:
-
-* nombre del proyecto
-* versión
-* dependencias instaladas
-* scripts de ejecución
-
-Cada vez que instalamos una librería, queda registrada en este archivo.
-____
-
-### COMANDOS UTILES:
-
-```node archivo.js``` -> ejecuta el archivo js con su contenido.
-
-```node -e "console.log('Hola mundo')"``` -> puede ejecutar código sin crear un archivo.
-
-```node``` -> abre una consola donde se puede escribir JavaScript directamente.
-
-> 2 + 2
-4
-
-> var nombre = "Amancio"
-undefined
-
-> nombre
-'Amancio'
-
-```.exit``` ó **Ctrl + c** -> cierran el ejecutor js de node
+- `data/`: Archivos JSON con datos de prueba.
+- `fixtures/`: Configuración de fixtures personalizadas.
+- `pages/`: Page Objects que encapsulan locators y acciones.
+- `tests/`: Casos de prueba organizados por módulo.
+- `utils/`: Utilidades y helpers genéricos.

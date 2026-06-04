@@ -1,7 +1,5 @@
 // @ts-check
 
-const { expect } = require('@playwright/test');
-
 /**
  * Recorre una lista de elementos, captura sus textos y los devuelve normalizados
  * @param {import('@playwright/test').Locator} locator - Locator que representa la colección de elementos
@@ -24,17 +22,6 @@ async function captureTextsFromList(locator) {
   return texts;
 }
 
-/**
- * Valida que la lista de textos capturados coincida exactamente con la esperada
- * @param {string[]} actualTexts - Textos obtenidos en la UI
- * @param {string[]} expectedTexts - Textos esperados para la validación
- * @returns {Promise<void>} Promesa resuelta cuando la comparación finaliza
- */
-async function validateTextsList(actualTexts, expectedTexts) {
-  expect(actualTexts).toEqual(expectedTexts);
-}
-
 module.exports = {
   captureTextsFromList,
-  validateTextsList
 };

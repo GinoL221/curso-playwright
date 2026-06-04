@@ -5,7 +5,7 @@
   },
   "invalidUsers": [
     {
-      "username": "Admin",
+      "username": "nonExistentAdmin",
       "password": "admin124",
       "message": "Invalid credentials"
     },

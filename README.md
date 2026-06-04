@@ -2,6 +2,16 @@
 
 Framework de automatización E2E para [OrangeHRM](https://opensource-demo.orangehrmlive.com) usando **Playwright** con **Page Object Model (POM)**.
 
+## Template
+
+Este proyecto es la **implementación de referencia** de la arquitectura Playwright POM + fixtures. Para iniciar un nuevo proyecto con la misma estructura, usá el template genérico:
+
+**[playwright-template](https://github.com/GinoL221/playwright-template)** — capa genérica (BasePage, fixtures, config, Docker) lista para scaffoldear con `gh repo create --template`.
+
+```bash
+gh repo create mi-proyecto --template GinoL221/playwright-template --clone
+```
+
 ## Requisitos
 
 - Node.js 18+
@@ -36,8 +46,7 @@ Los tests apuntan a `https://opensource-demo.orangehrmlive.com` por defecto.
 │   ├── BasePage.js         ←   Clase base (click, fill, open, etc.)
 │   ├── LoginPage.js        ←   Login
 │   ├── DashboardPage.js    ←   Dashboard
-│   ├── PimPage.js          ←   PIM (empleados)
-│   └── Recruitments.js     ←   Reclutamiento
+│   └── PimPage.js          ←   PIM (empleados)
 ├── fixtures/
 │   └── fixtures.js         ←   Fixtures con page objects inyectados
 ├── utils/
@@ -68,8 +77,7 @@ Cada pantalla de OrangeHRM tiene su propia clase que extiende `BasePage`:
 BasePage (click, fill, getText, open, waitForVisible)
   ├── LoginPage      → login(username, password)
   ├── DashboardPage  → openMenuOption(option)
-  ├── PimPage        → addEmployee(firstName, lastName)
-  └── Recruitments   → (métodos de reclutamiento)
+  └── PimPage        → addEmployee(firstName, lastName)
 ```
 
 `BasePage` concentra los métodos genéricos. Los Page Objects hijos heredan la documentación (JSDoc) y agregan métodos de negocio específicos.
@@ -141,7 +149,6 @@ npm run docker:test
 - **Login**: flujo positivo, negativo, validaciones de campo
 - **Dashboard**: carga de módulos, elementos visibles, validaciones
 - **PIM**: navegación, creación de empleados (E2E)
-- **Recruitment**: (pendiente de completar)
 
 ## Notas técnicas
 

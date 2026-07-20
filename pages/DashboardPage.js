@@ -15,8 +15,8 @@ class DashboardPage extends BasePage {
     super(page);
 
     this.dashboardTitle = page.locator('h6');
+    // Sin rol ni aria-label accesible en el markup de OrangeHRM; se usa la clase como único selector estable
     this.userDropdownName = page.locator('.oxd-userdropdown-name');
-    this.menuItems = page.locator('.oxd-main-menu-item');
     this.searchInput = page.locator('input[placeholder="Search"]');
   }
 
@@ -60,7 +60,7 @@ class DashboardPage extends BasePage {
    * @returns {Promise<boolean[]>} Resultado booleano por cada opción evaluada
    */
   async areMultipleMenuOptionsVisible(options) {
-    await this.menuItems.first().waitFor();
+    await this.page.getByRole('link', { name: options[0] }).waitFor();
 
     const visibleOptions = [];
 

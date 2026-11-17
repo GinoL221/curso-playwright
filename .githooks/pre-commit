@@ -1,0 +1,10 @@
+#!/bin/sh
+# Pre-commit guard: scan staged changes for secrets with gitleaks.
+set -eu
+
+command -v gitleaks >/dev/null 2>&1 || {
+  echo 'gitleaks is required to commit safely.' >&2
+  exit 1
+}
+
+exec gitleaks git --pre-commit --staged --redact --no-banner .

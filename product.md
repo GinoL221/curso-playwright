@@ -39,15 +39,15 @@ El alta de empleados queda omitida hasta contar con un entorno aislado y una lim
 
 ## Estado y verificación
 
-Verificado el 2026-11-17 sobre el árbol de trabajo local, **sin commit**:
+Verificado el 2026-11-17 (los cambios están commiteados y publicados en `main`):
 
 - **Docker (copia aislada):** `npm run docker:test` terminó con 27 tests aprobados y 3 omitidos en Chromium, Firefox y WebKit.
 - **Pruebas offline:** 13 aprobadas con `node --test "tests-unit/*.test.js"`.
 - **Revisión nativa:** aprobada después de corregir que `docker:test` descartaba los argumentos.
+- **CI remoto:** el workflow `.github/workflows/playwright.yml` pasó en Chromium, Firefox y WebKit tras fijar el runner a `ubuntu-24.04`.
 
 **No verificado:**
 
-- Ejecución remota del workflow de CI (`.github/workflows/playwright.yml`).
 - Generación del reporte Allure, que además requiere la CLI de Allure y Java.
 - WebKit en el host: faltan librerías del sistema; en Docker funciona.
 
@@ -67,12 +67,13 @@ Verificado el 2026-11-17 sobre el árbol de trabajo local, **sin commit**:
 
 - [ ] Completar la cobertura de los flujos principales del trabajo final.
 - [ ] Reactivar el alta de empleados con un entorno aislado y limpieza verificada.
-- [ ] Verificar el workflow de CI de forma remota.
+- [ ] Revisar el runner fijado en `ubuntu-24.04` cuando Playwright soporte Ubuntu 26.04.
 - [ ] Alinear el README con el estado real (ver Riesgos).
 
 ## Riesgos
 
 - **Dependencia externa:** la demo pública puede cambiar su interfaz o no estar disponible, y eso rompe tests sin que haya un cambio en el repo. Ya ocurrió con un selector de clase que desapareció y se reemplazó por un locator accesible.
+- **Runner de CI:** `ubuntu-latest` ya apunta a Ubuntu 26.04, que Playwright 1.60 no soporta; con ese runner los tres jobs fallaban al instalar los navegadores. Por eso el workflow fija `ubuntu-24.04`.
 - **Datos compartidos:** otras personas usan la misma demo; evitá modificar datos ajenos.
 - **README desactualizado en tres puntos:**
   - Indica "Node.js 18+", sin contrastar con los requisitos de Playwright 1.60 (las pruebas offline se ejecutaron con Node 24).

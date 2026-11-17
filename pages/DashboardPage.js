@@ -25,17 +25,13 @@ class DashboardPage extends BasePage {
    * @returns {Promise<boolean>} true cuando la vista principal de dashboard está lista
    */
   async isDashboardVisible() {
-    try {
-      await this.page.waitForURL(/dashboard/);
-      await this.waitForVisible(this.dashboardTitle);
-      await this.waitForVisible(this.userDropdownName);
+    await this.page.waitForURL(/dashboard/);
+    await this.waitForVisible(this.dashboardTitle);
+    await this.waitForVisible(this.userDropdownName);
 
-      const titleText = (await this.dashboardTitle.innerText()).trim();
+    const titleText = (await this.dashboardTitle.innerText()).trim();
 
-      return titleText === 'Dashboard';
-    } catch {
-      return false;
-    }
+    return titleText === 'Dashboard';
   }
 
   /**
@@ -44,14 +40,10 @@ class DashboardPage extends BasePage {
    * @returns {Promise<boolean>} true cuando la opción de menú es visible
    */
   async isMenuOptionVisible(optionName) {
-    try {
-      const option = this.page.getByRole('link', { name: optionName });
-      await this.waitForVisible(option);
+    const option = this.page.getByRole('link', { name: optionName });
+    await this.waitForVisible(option);
 
-      return true;
-    } catch {
-      return false;
-    }
+    return true;
   }
 
   /**
@@ -94,13 +86,9 @@ class DashboardPage extends BasePage {
    * @returns {Promise<boolean>} true cuando el nombre del usuario está visible
    */
   async isLoggedUserVisible() {
-    try {
-      await this.waitForVisible(this.userDropdownName);
+    await this.waitForVisible(this.userDropdownName);
 
-      return true;
-    } catch {
-      return false;
-    }
+    return true;
   }
 }
 

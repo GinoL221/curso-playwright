@@ -29,9 +29,13 @@ test.describe('Dashboard - OrangeHRM', () => {
     const isDashboardVisible = await dashboardPage.isDashboardVisible();
     expect(isDashboardVisible).toBe(true);
 
+    const adminOption = dashboardPage.page.getByRole('link', { name: 'Admin', exact: true });
+    await expect(adminOption).toBeVisible();
+
     await dashboardPage.searchMenuOption('PIM');
 
     const isPimOptionVisible = await dashboardPage.isMenuOptionVisible('PIM');
     expect(isPimOptionVisible).toBe(true);
+    await expect(adminOption).toBeHidden();
   });
 });

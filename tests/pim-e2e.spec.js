@@ -4,13 +4,14 @@ const { test, expect } = require('../fixtures/fixtures');
 const users = require('../data/users.json');
 
 test.describe('PIM - End to End', () => {
+  // Disabled until an isolated environment and employee cleanup are available.
   
   test.beforeEach(async ({ loginPage }) => {
     await loginPage.goToLogin();
     await loginPage.login(users.validUser.username, users.validUser.password);
   });
 
-  test('Debe permitir agregar un nuevo empleado exitosamente', async ({ dashboardPage, pimPage }) => {
+  test.skip('Debe permitir agregar un nuevo empleado exitosamente', async ({ dashboardPage, pimPage }) => {
     const firstName = 'Gentleman';
     const lastName = 'Tester';
 

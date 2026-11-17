@@ -14,7 +14,7 @@ const PimPage = require('../pages/PimPage');
  * @property {PimPage} pimPage - Fixture que inicializa PimPage y expone setup/use/teardown
  */
 
-/** @type {import('@playwright/test').TestType<import('@playwright/test').PlaywrightTestArgs & import('@playwright/test').PlaywrightTestOptions, AppFixtures>} */
+/** @type {import('@playwright/test').TestType<import('@playwright/test').PlaywrightTestArgs & import('@playwright/test').PlaywrightTestOptions & AppFixtures, import('@playwright/test').PlaywrightWorkerArgs & import('@playwright/test').PlaywrightWorkerOptions>} */
 const test = base.test.extend({
   // Definimos una fixture para cada página
   /**

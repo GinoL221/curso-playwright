@@ -35,16 +35,12 @@ class PimPage extends BasePage {
    * @returns {Promise<boolean>} true cuando URL y título de PIM son correctos
    */
   async isPimPageVisible() {
-    try {
-      await this.page.waitForURL(/pim/);
-      await this.waitForVisible(this.pimTitle);
+    await this.page.waitForURL(/pim/);
+    await this.waitForVisible(this.pimTitle);
 
-      const pimTitleText = (await this.pimTitle.innerText()).trim();
+    const pimTitleText = (await this.pimTitle.innerText()).trim();
 
-      return pimTitleText === 'PIM';
-    } catch {
-      return false;
-    }
+    return pimTitleText === 'PIM';
   }
 
   /**
@@ -63,12 +59,8 @@ class PimPage extends BasePage {
     const visibilityResults = [];
 
     for (const locator of locators) {
-      try {
-        await this.waitForVisible(locator);
-        visibilityResults.push(true);
-      } catch {
-        visibilityResults.push(false);
-      }
+      await this.waitForVisible(locator);
+      visibilityResults.push(true);
     }
 
     return visibilityResults;

@@ -36,16 +36,12 @@ class LoginPage extends BasePage {
    * @returns {Promise<boolean>} true cuando todos los elementos están visibles
    */
   async isLoginPageVisible() {
-    try {
-      await this.waitForVisible(this.loginTitle);
-      await this.waitForVisible(this.usernameInput);
-      await this.waitForVisible(this.passwordInput);
-      await this.waitForVisible(this.loginButton);
+    await this.waitForVisible(this.loginTitle);
+    await this.waitForVisible(this.usernameInput);
+    await this.waitForVisible(this.passwordInput);
+    await this.waitForVisible(this.loginButton);
 
-      return true;
-    } catch {
-      return false;
-    }
+    return true;
   }
 
   /**

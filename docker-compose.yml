@@ -5,5 +5,6 @@ services:
     working_dir: /app
     volumes:
       - ./:/app:Z
-      - /app/node_modules
-    command: sh -c "npm install && npx playwright test"
+    tmpfs:
+      - /app/node_modules:exec,uid=${UID:-1000},gid=${GID:-1000}
+    command: sh -c "npm ci --ignore-scripts && npx playwright test"

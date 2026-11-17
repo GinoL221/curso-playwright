@@ -24,7 +24,7 @@ gh repo create mi-proyecto --template GinoL221/playwright-template --clone
 # 1. Instalar dependencias
 npm install
 
-# 2. Instalar navegadores (Chromium + Firefox)
+# 2. Instalar navegadores (Chromium, Firefox y WebKit)
 npx playwright install
 
 # 3. Ejecutar todos los tests
@@ -52,16 +52,12 @@ Los tests apuntan a `https://opensource-demo.orangehrmlive.com` por defecto.
 ├── utils/
 │   └── listUtil.js         ←   Utilidades para listas
 ├── tests/                  ←   Specs E2E
-│   ├── login.spec.js
-│   ├── login-positivo.spec.js
-│   ├── login-negativo.spec.js
-│   ├── dashboard.spec.js
-│   ├── dashboard-validaciones.spec.js
 │   ├── dashboard-elementos-visibles.spec.js
-│   ├── pim.spec.js
+│   ├── dashboard.spec.js
+│   ├── login.spec.js
 │   ├── pim-e2e.spec.js
-│   ├── validar-usuario-dashboard.spec.js
-│   └── [otros specs de ejemplo y práctica]
+│   └── pim.spec.js
+├── tests-unit/             ←   Pruebas offline de los helpers y comandos
 ├── data/
 │   └── users.json          ←   Datos de prueba
 ├── playwright.config.js    ←   Configuración de Playwright
@@ -106,7 +102,7 @@ Definilas en un archivo `.env` en la raíz.
 
 | Comando | Descripción |
 |---|---|
-| `npm test` | Tests en headless (Chromium + Firefox) |
+| `npm test` | Tests en headless (Chromium, Firefox y WebKit) |
 | `npm run test:chrome` | Solo Chromium |
 | `npm run test:firefox` | Solo Firefox |
 | `npm run test:headed` | Con navegador visible |
@@ -118,37 +114,32 @@ Definilas en un archivo `.env` en la raíz.
 ### Reportes
 
 - **HTML**: `playwright-report/` — `npm run report`
-- **Allure**: `allure-results/` → `npm run allure:generate && npm run allure:open`
+- **Allure**: `allure-results/` → `npm run allure:generate && npm run allure:open`. Estos comandos requieren la [CLI de Allure](https://allurereport.org/docs/install/) y Java instalados por separado; `allure-playwright` solo genera los resultados.
 - **Traces**: disponibles en `test-results/` para tests con retry
 
 ## Docker
 
 ```bash
-# Setup inicial (instalar deps + browsers)
-npm run docker:setup
-
-# Ejecutar tests
+# Instala las dependencias del lockfile y ejecuta los tests en el mismo contenedor
 npm run docker:test
 
-# Subir contenedor interactivo
+# Alternativamente, ejecuta el servicio con Docker Compose
 npm run docker:up
-
-# Reset completo
-npm run docker:reset
 ```
 
-El `docker-compose.yml` usa tu UID/GID para que los archivos generados no queden como root:
+La imagen incluye los navegadores. `node_modules` vive en un filesystem temporal: cada ejecución empieza vacía y `docker:test` ejecuta `npm ci --ignore-scripts` antes de Playwright. Los comandos antiguos `docker:install` y `docker:setup` operan en contenedores separados; sus instalaciones no se conservan para `docker:test`. La configuración npm del host no se hereda automáticamente en el contenedor; verificá la política activa antes de instalar paquetes.
+
+El contenedor usa UID/GID 1000 por defecto. Para otros valores, pasalos a Compose sin reasignar la variable de solo lectura `UID` de Bash:
 
 ```bash
-export UID=$(id -u) GID=$(id -g)
-npm run docker:test
+env UID="$(id -u)" GID="$(id -g)" npm run docker:test
 ```
 
 ## Tests incluidos
 
 - **Login**: flujo positivo, negativo, validaciones de campo
 - **Dashboard**: carga de módulos, elementos visibles, validaciones
-- **PIM**: navegación, creación de empleados (E2E)
+- **PIM**: navegación y elementos principales. El E2E de creación está omitido hasta contar con un entorno aislado y una limpieza verificada.
 
 ## Notas técnicas
 

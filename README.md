@@ -105,11 +105,15 @@ Definilas en un archivo `.env` en la raíz.
 | `npm test` | Tests en headless (Chromium, Firefox y WebKit) |
 | `npm run test:chrome` | Solo Chromium |
 | `npm run test:firefox` | Solo Firefox |
+| `npm run test:webkit` | Solo WebKit |
 | `npm run test:headed` | Con navegador visible |
 | `npm run test:ui` | UI Mode de Playwright |
 | `npm run report` | Abrir reporte HTML local |
 | `npm run trace` | Ver trace de tests fallidos |
 | `npm run allure:open` | Reporte Allure |
+| `npm run docker:test` | Tests en Docker; acepta argumentos de Playwright, por ejemplo `-- --project=chromium` |
+| `npm run clean` | Borra resultados y reportes generados |
+| `node --test "tests-unit/*.test.js"` | Pruebas offline de `tests-unit/`; no acceden a OrangeHRM |
 
 ### Reportes
 
